@@ -1,0 +1,15 @@
+/* ===== @newtil/components — newtil 기본 컴포넌트 =====
+ *
+ * n-* prefix 기반 컴포넌트. design-tokens 위에 동작.
+ * reset은 n-* 스코프만 적용 (또는 body.reset).
+ *
+ * Material Design 3 스펙 기반 컴포넌트는 @newtil/materials 참조.
+ */
+
+@layer reset, tokens, base, components;
+
+@import "@newtil/design-tokens";
+@import "./reset.css";
+
+@import "./component/n-prose.css";
+@import "./component/n-table.css";

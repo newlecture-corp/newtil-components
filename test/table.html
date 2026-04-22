@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>n-table 테스트</title>
+<link rel="stylesheet" href="../dist/index.css" />
+<style>
+	body {
+		margin: 0;
+		padding: 2rem;
+		background: var(--color-surface);
+		color: var(--color-on-surface);
+		font-family: system-ui, -apple-system, sans-serif;
+	}
+	.container { max-width: 64rem; margin: 0 auto; }
+	.toolbar {
+		display: flex; gap: 0.5rem; margin-bottom: 2rem;
+		padding: 0.75rem; background: var(--color-surface-subtle); border-radius: 0.5rem;
+	}
+	.toolbar button {
+		padding: 0.375rem 0.75rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface); color: var(--color-text);
+		border-radius: 0.25rem; cursor: pointer;
+	}
+	h1 { margin: 0 0 0.5rem; font-size: 2rem; }
+	.lead { margin: 0 0 2rem; color: var(--color-text-muted); }
+	h2 { margin: 2.5rem 0 0.75rem; font-size: 1.25rem; }
+	h3 { margin: 2rem 0 0.75rem; font-size: 1rem; color: var(--color-text-muted); }
+	p.desc { margin: 0 0 1rem; color: var(--color-text-muted); font-size: 0.9rem; }
+	pre.source {
+		background: var(--color-surface-muted); color: var(--color-text);
+		padding: 0.75rem 1rem; border-radius: 0.5rem; font-size: 0.8125rem;
+		overflow-x: auto; font-family: ui-monospace, monospace; margin-top: 1rem;
+	}
+	.taxonomy {
+		display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem;
+		margin: 0 0 2rem;
+		padding: 1rem; background: var(--color-surface-subtle); border-radius: 0.5rem;
+		font-size: 0.875rem;
+	}
+	.taxonomy dt { font-weight: 600; color: var(--color-text); }
+	.taxonomy dd { margin: 0; color: var(--color-text-muted); font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<div class="container">
+	<div class="toolbar">
+		<button onclick="document.documentElement.dataset.theme='light'">Light</button>
+		<button onclick="document.documentElement.dataset.theme='dark'">Dark</button>
+		<button onclick="document.documentElement.removeAttribute('data-theme')">System</button>
+	</div>
+
+	<h1>n-table</h1>
+	<p class="lead">타입(배타) + 옵션(조합)의 3단계 커스터마이징 체계.</p>
+
+	<dl class="taxonomy">
+		<dt>타입</dt><dd>table:striped &nbsp; table:bordered &nbsp; table:minimal</dd>
+		<dt>옵션</dt><dd>table-shape:rounded &nbsp; table-hover:row &nbsp; table-density:compact</dd>
+		<dt>셀 옵션</dt><dd>cell:numeric &nbsp; cell:center</dd>
+	</dl>
+
+	<!-- ═══════════════ 타입 ═══════════════ -->
+	<h2>타입 (table:*) — 한 번에 하나</h2>
+
+	<h3>기본 (타입 없음)</h3>
+	<p class="desc">헤더 배경 + 행 아래 보더.</p>
+	<table class="n-table">
+		<thead><tr><th>패키지</th><th>버전</th><th class="cell:numeric">다운로드</th></tr></thead>
+		<tbody>
+			<tr><td>@newtil/design-tokens</td><td>0.1.1</td><td class="cell:numeric">1,204</td></tr>
+			<tr><td>@newtil/css</td><td>0.5.0</td><td class="cell:numeric">872</td></tr>
+			<tr><td>@newtil/web</td><td>0.1.0</td><td class="cell:numeric">12</td></tr>
+		</tbody>
+	</table>
+	<pre class="source">&lt;table class="n-table"&gt;</pre>
+
+	<h3>table:striped</h3>
+	<p class="desc">짝수행 배경 — 가독성 높임.</p>
+	<table class="n-table table:striped">
+		<thead><tr><th>ID</th><th>이름</th><th>역할</th><th class="cell:numeric">점수</th></tr></thead>
+		<tbody>
+			<tr><td>1</td><td>홍길동</td><td>관리자</td><td class="cell:numeric">98</td></tr>
+			<tr><td>2</td><td>김철수</td><td>강사</td><td class="cell:numeric">87</td></tr>
+			<tr><td>3</td><td>이영희</td><td>수강생</td><td class="cell:numeric">92</td></tr>
+			<tr><td>4</td><td>박민수</td><td>수강생</td><td class="cell:numeric">75</td></tr>
+		</tbody>
+	</table>
+	<pre class="source">&lt;table class="n-table table:striped"&gt;</pre>
+
+	<h3>table:bordered</h3>
+	<p class="desc">격자 — 엑셀 스타일.</p>
+	<table class="n-table table:bordered">
+		<thead><tr><th>항목</th><th>값</th><th>단위</th></tr></thead>
+		<tbody>
+			<tr><td>너비</td><td>1920</td><td>px</td></tr>
+			<tr><td>높이</td><td>1080</td><td>px</td></tr>
+			<tr><td>비율</td><td>16:9</td><td>—</td></tr>
+		</tbody>
+	</table>
+	<pre class="source">&lt;table class="n-table table:bordered"&gt;</pre>
+
+	<h3>table:minimal</h3>
+	<p class="desc">헤더 배경 제거, uppercase 레이블 — 대시보드 스타일.</p>
+	<table class="n-table table:minimal">
+		<thead><tr><th>Metric</th><th class="cell:numeric">Value</th><th class="cell:numeric">Change</th></tr></thead>
+		<tbody>
+			<tr><td>Page Views</td><td class="cell:numeric">42,103</td><td class="cell:numeric">+12%</td></tr>
+			<tr><td>Unique Users</td><td class="cell:numeric">8,421</td><td class="cell:numeric">+8%</td></tr>
+			<tr><td>Bounce Rate</td><td class="cell:numeric">38.2%</td><td class="cell:numeric">−4%</td></tr>
+		</tbody>
+	</table>
+	<pre class="source">&lt;table class="n-table table:minimal"&gt;</pre>
+
+	<!-- ═══════════════ 옵션 ═══════════════ -->
+	<h2>옵션 — 타입 위에 조합</h2>
+
+	<h3>table-shape:rounded</h3>
+	<p class="desc">모서리를 둥글게. bordered / striped / minimal 어디에나 얹을 수 있음.</p>
+	<table class="n-table table:bordered table-shape:rounded">
+		<thead><tr><th>날짜</th><th>이벤트</th><th class="cell:center">상태</th></tr></thead>
+		<tbody>
+			<tr><td>2026-04-18</td><td>배포</td><td class="cell:center">완료</td></tr>
+			<tr><td>2026-04-19</td><td>테스트</td><td class="cell:center">진행</td></tr>
+			<tr><td>2026-04-21</td><td>리뷰</td><td class="cell:center">대기</td></tr>
+		</tbody>
+	</table>
+	<pre class="source">&lt;table class="n-table table:bordered table-shape:rounded"&gt;</pre>
+
+	<h3>table-hover:row</h3>
+	<p class="desc">마우스 올리면 행 강조 — 클릭 가능함을 암시.</p>
+	<table class="n-table table-hover:row">
+		<thead><tr><th>파일</th><th>크기</th><th>수정일</th></tr></thead>
+		<tbody>
+			<tr><td>README.md</td><td>2.1 KB</td><td>2026-04-19</td></tr>
+			<tr><td>index.css</td><td>26 KB</td><td>2026-04-21</td></tr>
+			<tr><td>package.json</td><td>1.8 KB</td><td>2026-04-21</td></tr>
+		</tbody>
+	</table>
+	<pre class="source">&lt;table class="n-table table-hover:row"&gt;</pre>
+
+	<h3>table-density:compact</h3>
+	<p class="desc">좁은 패딩 + 작은 글자 — 대량 데이터.</p>
+	<table class="n-table table:striped table-density:compact">
+		<thead><tr><th>#</th><th>SKU</th><th>상품</th><th class="cell:numeric">재고</th><th class="cell:numeric">가격</th></tr></thead>
+		<tbody>
+			<tr><td>001</td><td>NL-001</td><td>자바 기초</td><td class="cell:numeric">120</td><td class="cell:numeric">49,000</td></tr>
+			<tr><td>002</td><td>NL-002</td><td>자바 중급</td><td class="cell:numeric">87</td><td class="cell:numeric">69,000</td></tr>
+			<tr><td>003</td><td>NL-003</td><td>스프링 입문</td><td class="cell:numeric">54</td><td class="cell:numeric">89,000</td></tr>
+			<tr><td>004</td><td>NL-004</td><td>스프링 실전</td><td class="cell:numeric">32</td><td class="cell:numeric">119,000</td></tr>
+			<tr><td>005</td><td>NL-005</td><td>리액트 기초</td><td class="cell:numeric">98</td><td class="cell:numeric">59,000</td></tr>
+		</tbody>
+	</table>
+	<pre class="source">&lt;table class="n-table table:striped table-density:compact"&gt;</pre>
+
+	<!-- ═══════════════ 조합 예시 ═══════════════ -->
+	<h2>조합 예시</h2>
+
+	<h3>striped + hover</h3>
+	<table class="n-table table:striped table-hover:row">
+		<thead><tr><th>사용자</th><th>역할</th><th>최근 로그인</th></tr></thead>
+		<tbody>
+			<tr><td>admin@newlecture.com</td><td>관리자</td><td>10분 전</td></tr>
+			<tr><td>lecture1@newlecture.com</td><td>강사</td><td>2시간 전</td></tr>
+			<tr><td>student1@newlecture.com</td><td>수강생</td><td>어제</td></tr>
+		</tbody>
+	</table>
+
+	<h3>minimal + hover + compact</h3>
+	<table class="n-table table:minimal table-hover:row table-density:compact">
+		<thead><tr><th>시간</th><th>레벨</th><th>메시지</th></tr></thead>
+		<tbody>
+			<tr><td>10:42:31</td><td>INFO</td><td>서버 시작</td></tr>
+			<tr><td>10:43:05</td><td>DEBUG</td><td>DB 연결 확인</td></tr>
+			<tr><td>10:43:12</td><td>WARN</td><td>캐시 미스</td></tr>
+			<tr><td>10:44:01</td><td>ERROR</td><td>타임아웃 발생</td></tr>
+		</tbody>
+	</table>
+
+	<h3>bordered + rounded + hover</h3>
+	<table class="n-table table:bordered table-shape:rounded table-hover:row">
+		<thead><tr><th>코스</th><th>강사</th><th class="cell:numeric">수강생</th><th class="cell:center">상태</th></tr></thead>
+		<tbody>
+			<tr><td>Next.js 실전</td><td>김강사</td><td class="cell:numeric">342</td><td class="cell:center">진행</td></tr>
+			<tr><td>TypeScript 입문</td><td>이강사</td><td class="cell:numeric">215</td><td class="cell:center">모집</td></tr>
+		</tbody>
+	</table>
+
+	<!-- ═══════════════ 캡션 + tfoot ═══════════════ -->
+	<h2>캡션 + tfoot</h2>
+	<table class="n-table table:striped">
+		<caption>2026년 1분기 매출 (단위: 만원)</caption>
+		<thead><tr><th>월</th><th class="cell:numeric">강의</th><th class="cell:numeric">컨설팅</th><th class="cell:numeric">합계</th></tr></thead>
+		<tbody>
+			<tr><td>1월</td><td class="cell:numeric">1,200</td><td class="cell:numeric">300</td><td class="cell:numeric">1,500</td></tr>
+			<tr><td>2월</td><td class="cell:numeric">1,450</td><td class="cell:numeric">250</td><td class="cell:numeric">1,700</td></tr>
+			<tr><td>3월</td><td class="cell:numeric">1,800</td><td class="cell:numeric">400</td><td class="cell:numeric">2,200</td></tr>
+		</tbody>
+		<tfoot>
+			<tr><td>합계</td><td class="cell:numeric">4,450</td><td class="cell:numeric">950</td><td class="cell:numeric">5,400</td></tr>
+		</tfoot>
+	</table>
+
+	<!-- ═══════════════ 반응형 ═══════════════ -->
+	<h2>n-table-wrap (반응형 가로 스크롤)</h2>
+	<div class="n-table-wrap">
+		<table class="n-table table:bordered table-hover:row">
+			<thead><tr><th>ID</th><th>제목</th><th>카테고리</th><th>작성자</th><th>작성일</th><th class="cell:numeric">조회수</th><th>상태</th></tr></thead>
+			<tbody>
+				<tr><td>1024</td><td>신기능 공지</td><td>공지</td><td>관리자</td><td>2026-04-20</td><td class="cell:numeric">1,203</td><td>게시중</td></tr>
+				<tr><td>1023</td><td>점검 안내</td><td>공지</td><td>관리자</td><td>2026-04-19</td><td class="cell:numeric">872</td><td>게시중</td></tr>
+				<tr><td>1022</td><td>이벤트 종료</td><td>이벤트</td><td>운영팀</td><td>2026-04-15</td><td class="cell:numeric">445</td><td>종료</td></tr>
+			</tbody>
+		</table>
+	</div>
+	<pre class="source">&lt;div class="n-table-wrap"&gt;
+  &lt;table class="n-table table:bordered table-hover:row"&gt;…&lt;/table&gt;
+&lt;/div&gt;</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+@charset "utf-8";
+
+/* ===== n-prose — 마크다운/HTML 본문 렌더링 스타일 =====
+ *
+ * 역할: 에디터(@newtil/editor)로 작성된 마크다운/HTML 본문을 표시할 때 사용.
+ *       래퍼 요소에 .n-prose 를 붙이면 내부 p/h1-h6/ul/ol/blockquote/pre/code/a/img/table 등이
+ *       일관된 스타일로 렌더링된다.
+ *
+ * 사용 예:
+ *   <article class="n-prose" dangerouslySetInnerHTML={...} />
+ *
+ * 옵션 (수정자 클래스):
+ *   prose:sm    작은 본문 (설명, 캡션성)
+ *   prose:lg    큰 본문 (블로그, 레터)
+ *
+ * 설계:
+ *   - 여백 규칙: 제목은 위·아래, 문장은 아래만, 첫/마지막 요소는 margin 제거
+ *   - 모든 값은 @newtil/design-tokens 참조 (다크모드 자동 대응)
+ *   - @newtil/components/reset.css 가 n-* prefix를 리셋하므로 명시 스타일 필요
+ */
+
+@layer components {
+	.n-prose {
+		color: var(--color-text);
+		font-size: var(--font-size-body);
+		line-height: var(--line-height-loose);
+		word-break: break-word;
+	}
+
+	.n-prose.prose\:sm { font-size: var(--font-size-body-sm); }
+	.n-prose.prose\:lg { font-size: var(--font-size-body-lg); }
+
+	/* 첫/마지막 요소의 외부 여백 제거 — 컨테이너 여백과 이중으로 겹치지 않도록 */
+	.n-prose > *:first-child { margin-top: 0; }
+	.n-prose > *:last-child  { margin-bottom: 0; }
+
+	/* ─── 문장 ─── */
+	.n-prose p {
+		margin: 0 0 var(--space-4) 0;
+	}
+
+	/* ─── 제목 ─── */
+	.n-prose h1,
+	.n-prose h2,
+	.n-prose h3,
+	.n-prose h4,
+	.n-prose h5,
+	.n-prose h6 {
+		color: var(--color-text);
+		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
+		letter-spacing: var(--letter-spacing-tight);
+	}
+	.n-prose h1 { font-size: var(--font-size-heading-lg); margin: var(--space-8) 0 var(--space-4); }
+	.n-prose h2 { font-size: var(--font-size-heading-md); margin: var(--space-7) 0 var(--space-3); }
+	.n-prose h3 { font-size: var(--font-size-heading-sm); margin: var(--space-6) 0 var(--space-3); font-weight: var(--font-weight-semibold); }
+	.n-prose h4 { font-size: var(--font-size-body-lg);    margin: var(--space-5) 0 var(--space-2); font-weight: var(--font-weight-semibold); }
+	.n-prose h5 { font-size: var(--font-size-body);       margin: var(--space-5) 0 var(--space-2); font-weight: var(--font-weight-semibold); }
+	.n-prose h6 { font-size: var(--font-size-body-sm);    margin: var(--space-4) 0 var(--space-2); font-weight: var(--font-weight-semibold); color: var(--color-text-muted); }
+
+	/* ─── 텍스트 강조 ─── */
+	.n-prose strong,
+	.n-prose b { font-weight: var(--font-weight-bold); }
+	.n-prose em,
+	.n-prose i { font-style: italic; }
+	.n-prose u { text-decoration: underline; text-underline-offset: 2px; }
+	.n-prose s,
+	.n-prose del { text-decoration: line-through; }
+	.n-prose mark {
+		background: var(--color-warning-subtle);
+		color: var(--color-text);
+		padding: 0 var(--space-1);
+		border-radius: var(--radius-1);
+	}
+	.n-prose small { font-size: var(--font-size-body-sm); }
+
+	/* ─── 링크 ─── */
+	.n-prose a {
+		color: var(--color-secondary);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		text-decoration-thickness: 1px;
+	}
+	.n-prose a:hover { color: var(--color-secondary-hover); }
+	.n-prose a:active { color: var(--color-secondary-active); }
+
+	/* ─── 리스트 ─── */
+	.n-prose ul,
+	.n-prose ol {
+		margin: 0 0 var(--space-4) 0;
+		padding-left: var(--space-6);
+	}
+	.n-prose ul { list-style: disc; }
+	.n-prose ol { list-style: decimal; }
+	.n-prose li { margin: var(--space-1) 0; }
+	.n-prose li::marker { color: var(--color-text-muted); }
+
+	/* 중첩 리스트 */
+	.n-prose ul ul,
+	.n-prose ul ol,
+	.n-prose ol ul,
+	.n-prose ol ol {
+		margin: var(--space-1) 0;
+	}
+	.n-prose ul ul { list-style: circle; }
+	.n-prose ul ul ul { list-style: square; }
+
+	/* 리스트 아이템 안의 p (마크다운 loose list 변환 결과) */
+	.n-prose li > p { margin: 0; }
+	.n-prose li > p + p { margin-top: var(--space-2); }
+
+	/* ─── 인용 ─── */
+	.n-prose blockquote {
+		margin: 0 0 var(--space-4) 0;
+		padding: var(--space-2) var(--space-4);
+		border-left: 3px solid var(--color-primary);
+		color: var(--color-text-muted);
+		background: var(--color-surface-subtle);
+		border-radius: 0 var(--radius-2) var(--radius-2) 0;
+	}
+	.n-prose blockquote > *:last-child { margin-bottom: 0; }
+
+	/* ─── 코드 ─── */
+	.n-prose code {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Code", "Courier New", monospace;
+		font-size: 0.9em;
+		padding: 0.1em 0.35em;
+		background: var(--color-surface-muted);
+		color: var(--color-danger);
+		border-radius: var(--radius-1);
+	}
+	.n-prose pre {
+		margin: 0 0 var(--space-4) 0;
+		padding: var(--space-4);
+		background: var(--color-surface-inverse);
+		color: var(--color-on-surface-inverse);
+		border-radius: var(--radius-3);
+		overflow-x: auto;
+		line-height: var(--line-height-normal);
+	}
+	.n-prose pre code {
+		padding: 0;
+		background: transparent;
+		color: inherit;
+		font-size: var(--font-size-body-sm);
+		border-radius: 0;
+	}
+
+	/* ─── 이미지 / 미디어 ─── */
+	.n-prose img {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		margin: var(--space-4) 0;
+		border-radius: var(--radius-2);
+	}
+	.n-prose figure {
+		margin: var(--space-4) 0;
+	}
+	.n-prose figure > img { margin: 0; }
+	.n-prose figcaption {
+		margin-top: var(--space-2);
+		font-size: var(--font-size-body-sm);
+		color: var(--color-text-muted);
+		text-align: center;
+	}
+
+	/* ─── 가로줄 ─── */
+	.n-prose hr {
+		margin: var(--space-6) 0;
+		border: 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* ─── 표 (간이) — 본격적인 표는 n-table 사용 권장 ─── */
+	.n-prose table {
+		margin: 0 0 var(--space-4) 0;
+		border-collapse: collapse;
+		width: 100%;
+		font-size: var(--font-size-body-sm);
+	}
+	.n-prose thead { border-bottom: 2px solid var(--color-border-strong); }
+	.n-prose tr { border-bottom: 1px solid var(--color-border); }
+	.n-prose th,
+	.n-prose td {
+		padding: var(--space-2) var(--space-3);
+		text-align: left;
+		vertical-align: top;
+	}
+	.n-prose th {
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	/* ─── 임베드 (iframe 반응형) ─── */
+	.n-prose iframe {
+		max-width: 100%;
+		border: 0;
+		border-radius: var(--radius-2);
+	}
+
+	/* ─── 키보드 입력 표시 ─── */
+	.n-prose kbd {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+		font-size: 0.85em;
+		padding: 0.1em 0.4em;
+		background: var(--color-surface-muted);
+		color: var(--color-text);
+		border: 1px solid var(--color-border);
+		border-bottom-width: 2px;
+		border-radius: var(--radius-1);
+	}
+}

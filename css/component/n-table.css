@@ -1,0 +1,159 @@
+@charset "utf-8";
+
+/* ===== n-table — 데이터 표 =====
+ *
+ * 역할: 관리자 데이터 목록, 비교표 등 본격적인 표 표시.
+ *       (마크다운 본문 내 표는 .n-prose 의 기본 표 스타일 사용)
+ *
+ * 커스터마이징 3단계 (newtil 원칙):
+ *   1) 타입     : 표의 "종류" — 한 번에 하나만 (배타)
+ *   2) 옵션     : 조합 가능한 수정자
+ *   3) 변수     : 마지막 수단 (--color-*, --space-* 재정의)
+ *
+ * ── 타입 (table:*) ───────────────────────────────
+ *   (기본)              헤더 배경 + 행 아래 보더 (무 수정자)
+ *   table:striped       짝수행 배경 (줄무늬)
+ *   table:bordered      격자 보더 (모든 셀 구분)
+ *   table:minimal       헤더 배경 제거, 대시보드 스타일
+ *
+ * ── 옵션 (table-{속성}:{값}) ─────────────────────
+ *   table-shape:rounded     모서리 둥글게
+ *   table-hover:row         행 호버 하이라이트
+ *   table-density:compact   좁은 패딩 + 작은 글자
+ *
+ * ── 셀 옵션 (cell:{값}) ──────────────────────────
+ *   cell:numeric            우측 정렬 + tabular-nums
+ *   cell:center             가운데 정렬
+ *
+ * 예:
+ *   <table class="n-table">…기본
+ *   <table class="n-table table:striped table-hover:row">
+ *   <table class="n-table table:bordered table-shape:rounded">
+ *   <table class="n-table table:minimal table-hover:row table-density:compact">
+ */
+
+@layer components {
+	/* ───────────── 기본 ───────────── */
+	.n-table {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0;
+		font-size: var(--font-size-body);
+		color: var(--color-text);
+		text-align: left;
+	}
+
+	.n-table thead th {
+		padding: var(--space-3) var(--space-4);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+		background: var(--color-surface-subtle);
+		border-bottom: 2px solid var(--color-border-strong);
+		vertical-align: bottom;
+		white-space: nowrap;
+	}
+
+	.n-table tbody td {
+		padding: var(--space-3) var(--space-4);
+		border-bottom: 1px solid var(--color-border);
+		vertical-align: top;
+	}
+
+	.n-table tbody tr:last-child td {
+		border-bottom: 0;
+	}
+
+	.n-table tfoot td {
+		padding: var(--space-3) var(--space-4);
+		border-top: 2px solid var(--color-border-strong);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.n-table caption {
+		padding: var(--space-2) 0;
+		font-size: var(--font-size-body-sm);
+		color: var(--color-text-muted);
+		text-align: left;
+		caption-side: top;
+	}
+
+	/* ───────────── 타입 (배타) ───────────── */
+
+	/* Striped — 줄무늬 */
+	.n-table.table\:striped tbody tr:nth-child(even) td {
+		background: var(--color-surface-subtle);
+	}
+
+	/* Bordered — 격자 */
+	.n-table.table\:bordered {
+		border: 1px solid var(--color-border);
+	}
+	.n-table.table\:bordered thead th,
+	.n-table.table\:bordered tbody td {
+		border-right: 1px solid var(--color-border);
+	}
+	.n-table.table\:bordered thead th:last-child,
+	.n-table.table\:bordered tbody td:last-child {
+		border-right: 0;
+	}
+
+	/* Minimal — 대시보드 스타일 */
+	.n-table.table\:minimal thead th {
+		background: transparent;
+		border-bottom: 1px solid var(--color-border);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text-muted);
+		font-size: var(--font-size-body-sm);
+		text-transform: uppercase;
+		letter-spacing: var(--letter-spacing-wide);
+	}
+
+	/* ───────────── 옵션 (조합) ───────────── */
+
+	/* 모서리 둥글게 — bordered 나 striped 에 얹어서 사용 */
+	.n-table.table-shape\:rounded {
+		border-radius: var(--radius-3);
+		overflow: hidden;
+	}
+	/* rounded 단독 적용 시에도 경계선이 보이도록 */
+	.n-table.table-shape\:rounded:not(.table\:bordered) {
+		border: 1px solid var(--color-border);
+	}
+
+	/* 호버 하이라이트 */
+	.n-table.table-hover\:row tbody tr {
+		transition: background-color 120ms;
+	}
+	.n-table.table-hover\:row tbody tr:hover td {
+		background: var(--color-surface-muted);
+	}
+
+	/* 조밀 (밀도 높임) */
+	.n-table.table-density\:compact thead th,
+	.n-table.table-density\:compact tbody td,
+	.n-table.table-density\:compact tfoot td {
+		padding: var(--space-1) var(--space-2);
+		font-size: var(--font-size-body-sm);
+	}
+
+	/* ───────────── 셀 옵션 ───────────── */
+	.n-table th.cell\:numeric,
+	.n-table td.cell\:numeric {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+	.n-table th.cell\:center,
+	.n-table td.cell\:center {
+		text-align: center;
+	}
+
+	/* ───────────── 반응형 래퍼 ───────────── */
+	.n-table-wrap {
+		width: 100%;
+		overflow-x: auto;
+	}
+	.n-table-wrap > .n-table {
+		min-width: 32rem;
+	}
+}

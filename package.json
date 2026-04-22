@@ -1,0 +1,62 @@
+{
+	"name": "@newtil/components",
+	"version": "0.1.0",
+	"description": "newtil 기본 컴포넌트 라이브러리 — n- prefix (prose, table, pagination, breadcrumb, accordion, skeleton 등). @newtil/design-tokens 위에 동작.",
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "./dist/index.css",
+	"style": "./dist/index.css",
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./dist/index.css"
+		},
+		"./index.css": {
+			"default": "./dist/index.css"
+		},
+		"./package.json": "./package.json"
+	},
+	"keywords": [
+		"css",
+		"ui components",
+		"design system",
+		"web components",
+		"pagination",
+		"table",
+		"prose"
+	],
+	"author": "lectureteam",
+	"license": "MIT",
+	"scripts": {
+		"build": "rm -rf ./dist && rollup -c",
+		"deploy": "npm run build && npm publish",
+		"prepublishOnly": "npm run build",
+		"docs:dev": "vitepress dev docs --host",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs"
+	},
+	"dependencies": {
+		"@newtil/design-tokens": "^0.1.0"
+	},
+	"devDependencies": {
+		"vitepress": "^1.6.4",
+		"postcss": "^8.4.33",
+		"postcss-import": "^16.1.0",
+		"rollup": "^4.52.5",
+		"rollup-plugin-postcss": "^4.0.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/newlecture-corp/newtil-components.git"
+	},
+	"bugs": {
+		"url": "https://github.com/newlecture-corp/newtil-components/issues"
+	},
+	"homepage": "https://github.com/newlecture-corp/newtil-components#readme",
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	]
+}

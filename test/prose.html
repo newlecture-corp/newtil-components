@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>n-prose 테스트</title>
+<link rel="stylesheet" href="../dist/index.css" />
+<style>
+	body {
+		margin: 0;
+		padding: 2rem;
+		background: var(--color-surface);
+		color: var(--color-on-surface);
+		font-family: system-ui, -apple-system, sans-serif;
+	}
+	.container { max-width: 48rem; margin: 0 auto; }
+	.toolbar {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+		padding: 0.75rem;
+		background: var(--color-surface-subtle);
+		border-radius: 0.5rem;
+	}
+	.toolbar button {
+		padding: 0.375rem 0.75rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		color: var(--color-text);
+		border-radius: 0.25rem;
+		cursor: pointer;
+	}
+	.divider-label {
+		margin: 2.5rem 0 1rem;
+		padding-top: 1rem;
+		border-top: 2px solid var(--color-border-strong);
+		color: var(--color-text-muted);
+		font-size: 0.8125rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+</style>
+</head>
+<body>
+<div class="container">
+	<div class="toolbar">
+		<button onclick="document.documentElement.dataset.theme='light'">Light</button>
+		<button onclick="document.documentElement.dataset.theme='dark'">Dark</button>
+		<button onclick="document.documentElement.removeAttribute('data-theme')">System</button>
+	</div>
+
+	<article class="n-prose">
+		<h1>n-prose 스타일 검증</h1>
+		<p>이 문서는 <strong>@newtil/web</strong>의 <code>n-prose</code> 컴포넌트가 마크다운/HTML 본문을 일관되게 렌더링하는지 확인하는 페이지입니다. 모든 스타일은 <code>@newtil/design-tokens</code>의 변수를 참조합니다.</p>
+
+		<h2>제목 계층</h2>
+		<p>제목은 위·아래 여백을 두되, 위쪽 여백을 더 크게 주어 섹션 구분이 자연스럽도록 설계했습니다.</p>
+		<h3>h3 레벨 제목</h3>
+		<p>본문 문장은 아래쪽 여백만 둡니다.</p>
+		<h4>h4 레벨</h4>
+		<p>소제목도 동일한 규칙.</p>
+		<h5>h5 레벨</h5>
+		<h6>h6 레벨 — 약한 강조용</h6>
+
+		<h2>텍스트 강조</h2>
+		<p><strong>굵은 글씨</strong>, <em>기울임</em>, <u>밑줄</u>, <s>취소선</s>, <mark>형광펜</mark>, <code>인라인 코드</code>, <small>작은 글씨</small>, <kbd>Cmd</kbd> + <kbd>K</kbd>로 검색을 엽니다.</p>
+
+		<h2>링크</h2>
+		<p>문서 내 <a href="#">링크</a>는 secondary 색상으로 표시되며, hover 시 어두워집니다. 외부 링크도 <a href="https://newlecture.com">동일하게 처리</a>됩니다.</p>
+
+		<h2>리스트</h2>
+		<ul>
+			<li>순서 없는 리스트 항목 1</li>
+			<li>항목 2 — 길이가 길면 여러 줄에 걸쳐 나타납니다. 이때 들여쓰기가 자연스럽게 유지되어야 합니다.
+				<ul>
+					<li>중첩 항목 (circle)</li>
+					<li>중첩 항목 2
+						<ul>
+							<li>3단계 중첩 (square)</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>항목 3</li>
+		</ul>
+
+		<ol>
+			<li>순서 있는 리스트</li>
+			<li>두번째 항목</li>
+			<li>세번째 항목
+				<ol>
+					<li>중첩 순서 리스트</li>
+					<li>중첩 순서 리스트 2</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2>인용</h2>
+		<blockquote>
+			<p>좋은 디자인은 눈에 띄지 않는다. 그것이 제 기능을 다할 때, 우리는 그것이 있다는 사실 자체를 잊는다.</p>
+			<p>— Dieter Rams</p>
+		</blockquote>
+
+		<h2>코드 블록</h2>
+		<p>인라인 코드는 <code>--color-surface-muted</code> 배경에 <code>--color-danger</code> 색상으로 표시됩니다.</p>
+
+		<pre><code>function hello(name) {
+	console.log(`Hello, ${name}!`);
+	return name.length;
+}
+
+// 호출 예
+const result = hello("newtil");</code></pre>
+
+		<h2>이미지</h2>
+		<figure>
+			<img src="https://placehold.co/800x400/4F46E5/ffffff?text=n-prose+image" alt="예시 이미지" />
+			<figcaption>이미지 아래에 figcaption으로 설명을 달 수 있습니다.</figcaption>
+		</figure>
+
+		<h2>가로줄</h2>
+		<p>섹션 구분이 필요할 때.</p>
+		<hr />
+		<p>hr 앞뒤로 적당한 여백이 자동 확보됩니다.</p>
+
+		<h2>간이 표</h2>
+		<p>본격적인 데이터 표는 <code>n-table</code>을 사용하는 것을 권장하지만, 마크다운 변환 결과의 표도 자연스럽게 렌더링됩니다.</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>패키지</th>
+					<th>역할</th>
+					<th>Prefix</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>@newtil/components</td>
+					<td>M3 스펙 컴포넌트</td>
+					<td><code>m3-</code></td>
+				</tr>
+				<tr>
+					<td>@newtil/web</td>
+					<td>M3 외 범용 UI</td>
+					<td><code>n-</code></td>
+				</tr>
+				<tr>
+					<td>@newtil/editor</td>
+					<td>Markdown ↔ HTML 에디터</td>
+					<td>—</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>크기 변형</h2>
+	</article>
+
+	<div class="divider-label">prose:sm 변형</div>
+	<article class="n-prose prose:sm">
+		<h2>작은 본문</h2>
+		<p>캡션성 또는 보조 설명에 사용합니다. 제목과 본문이 비례해서 작아집니다.</p>
+		<ul>
+			<li>작은 리스트</li>
+			<li>작은 리스트</li>
+		</ul>
+	</article>
+
+	<div class="divider-label">prose:lg 변형</div>
+	<article class="n-prose prose:lg">
+		<h2>큰 본문</h2>
+		<p>블로그나 레터 형식의 읽는 콘텐츠에 사용합니다. 눈이 편하도록 본문 크기를 키웠습니다.</p>
+	</article>
+</div>
+</body>
+</html>
