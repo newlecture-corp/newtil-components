@@ -47,7 +47,7 @@
 		padding: var(--space-3) var(--space-4);
 		font-weight: var(--font-weight-semibold);
 		color: var(--color-text);
-		background: var(--color-surface-subtle);
+		background: var(--color-surface-1);
 		border-bottom: 2px solid var(--color-border-strong);
 		vertical-align: bottom;
 		white-space: nowrap;
@@ -82,7 +82,7 @@
 
 	/* Striped — 줄무늬 */
 	.n-table.table\:striped tbody tr:nth-child(even) td {
-		background: var(--color-surface-subtle);
+		background: var(--color-surface-1);
 	}
 
 	/* Bordered — 격자 */
@@ -126,7 +126,7 @@
 		transition: background-color 120ms;
 	}
 	.n-table.table-hover\:row tbody tr:hover td {
-		background: var(--color-surface-muted);
+		background: var(--color-surface-2);
 	}
 
 	/* 조밀 (밀도 높임) */
