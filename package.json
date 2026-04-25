@@ -1,6 +1,6 @@
 {
 	"name": "@newtil/components",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "newtil 기본 컴포넌트 라이브러리 — n- prefix (prose, table, pagination, breadcrumb, accordion, skeleton 등). @newtil/design-tokens 위에 동작.",
 	"publishConfig": {
 		"access": "public"
