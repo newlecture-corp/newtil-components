@@ -1,7 +1,7 @@
 {
 	"name": "@newtil/components",
-	"version": "0.3.0",
-	"description": "newtil 기본 컴포넌트 라이브러리 — n- prefix (prose, table, pagination, breadcrumb, accordion, skeleton 등). @newtil/design-tokens 위에 동작.",
+	"version": "0.4.4",
+	"description": "newtil 기본 컴포넌트 라이브러리 — n- prefix (prose, table, layout 등). @newtil/design-tokens 위에 동작. v0.4 부터 web component 도 포함 (n-resize-handle).",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -14,6 +14,16 @@
 		},
 		"./index.css": {
 			"default": "./dist/index.css"
+		},
+		"./js": {
+			"types": "./dist/js/index.d.ts",
+			"import": "./dist/js/index.js",
+			"default": "./dist/js/index.js"
+		},
+		"./n-resize-handle": {
+			"types": "./dist/js/n-resize-handle.d.ts",
+			"import": "./dist/js/n-resize-handle.js",
+			"default": "./dist/js/n-resize-handle.js"
 		},
 		"./package.json": "./package.json"
 	},
@@ -29,7 +39,7 @@
 	"author": "lectureteam",
 	"license": "MIT",
 	"scripts": {
-		"build": "rm -rf ./dist && rollup -c",
+		"build": "rm -rf ./dist && rollup -c && mkdir -p dist/js && cp js/*.d.ts dist/js/",
 		"deploy": "npm run build && npm publish",
 		"prepublishOnly": "npm run build",
 		"docs:dev": "vitepress dev docs --host",

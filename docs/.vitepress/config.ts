@@ -46,6 +46,7 @@ export default defineConfig({
         items: [
           { text: "Prose — 본문 렌더링", link: "/prose" },
           { text: "Table — 데이터 표", link: "/table" },
+          { text: "Layout — 도구 앱 레이아웃", link: "/layout" },
         ],
       },
     ],

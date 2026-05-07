@@ -1,0 +1,266 @@
+/* ====== n-layout — Tool app layout (Slack/Discord/VSCode style) =====
+ *
+ * 6-slot grid: header / rail / sidebar / main / panel / status
+ *
+ *   ┌──────────────────────────────────────┐
+ *   │             header                   │  전체 폭
+ *   ├──────┬─────────┬────────┬────────────┤
+ *   │ rail │ sidebar │  main  │   panel    │
+ *   │      │         │        │            │
+ *   ├──────┴─────────┴────────┴────────────┤
+ *   │             status                   │  전체 폭
+ *   └──────────────────────────────────────┘
+ *
+ * 사용법:
+ *   <div class="n-layout">
+ *     <header class="layout-header">...</header>
+ *     <nav class="layout-rail">...</nav>
+ *     <nav class="layout-sidebar">...</nav>
+ *     <main class="layout-main">...</main>
+ *     <aside class="layout-panel">...</aside>
+ *     <footer class="layout-status">...</footer>
+ *   </div>
+ *
+ * Options (조합 자유):
+ *   .layout:no-header / .layout:no-status   상하 슬롯 숨김
+ *   .layout:no-rail / .layout:no-sidebar / .layout:no-panel   좌우 슬롯 숨김
+ *   .layout:sidebar-collapsed   sidebar 를 rail 폭으로 축소
+ *
+ * Color tint:
+ *   --layout-tint 한 줄로 4개 슬롯 자동 음영. 다크모드 자동 분기.
+ *   미지정 시 var(--color-surface) 따라가서 design-tokens 의 라이트/다크에 자동 적응.
+ *
+ * Resize:
+ *   <n-resize-handle> 컴포넌트 (별 파일) 가 슬롯 사이 너비 조절.
+ * ===================================================================== */
+
+@layer components {
+	.n-layout {
+		/* === Variables ============================================ */
+
+		/* 슬롯 너비/높이 */
+		--layout-rail-width: 4rem;
+		--layout-sidebar-width: 16rem;
+		--layout-panel-width: 20rem;
+		--layout-header-height: 3.5rem;
+		--layout-status-height: 1.75rem;
+
+		/* 사용자 tint — 미지정 시 surface (중성). 호출자가 style="--layout-tint: #..." 로 override */
+		--layout-tint: var(--color-surface, #ffffff);
+
+		/* 자동 파생 — color-mix oklch 기반 단계적 음영 */
+		--layout-rail-bg: color-mix(in oklch, var(--layout-tint) 100%, black 20%);
+		--layout-sidebar-bg: color-mix(in oklch, var(--layout-tint) 100%, black 10%);
+		--layout-main-bg: color-mix(in oklch, var(--layout-tint) 4%, var(--color-surface, #ffffff));
+		--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 6%, var(--color-surface, #ffffff));
+		--layout-header-bg: var(--layout-rail-bg);
+		--layout-status-bg: var(--layout-rail-bg);
+
+		/* 텍스트 색 — design-tokens 의 text 따라감 */
+		--layout-rail-fg: var(--color-on-surface, #0f172a);
+		--layout-sidebar-fg: var(--color-on-surface, #0f172a);
+		--layout-main-fg: var(--color-text, #0f172a);
+		--layout-panel-fg: var(--color-text, #0f172a);
+		--layout-header-fg: var(--layout-rail-fg);
+		--layout-status-fg: var(--layout-rail-fg);
+
+		/* 구분선 */
+		--layout-divider: var(--color-outline, rgba(0, 0, 0, 0.1));
+
+		/* 그리드 컬럼/로우 변수 — 옵션 시 0 으로 줄여 슬롯 숨김 */
+		--grid-col-rail: var(--layout-rail-width);
+		--grid-col-sidebar: var(--layout-sidebar-width);
+		--grid-col-panel: var(--layout-panel-width);
+		--grid-row-header: var(--layout-header-height);
+		--grid-row-status: var(--layout-status-height);
+
+		/* === Grid ================================================= */
+		display: grid;
+		grid-template-columns:
+			var(--grid-col-rail)
+			var(--grid-col-sidebar)
+			minmax(0, 1fr)
+			var(--grid-col-panel);
+		grid-template-rows:
+			var(--grid-row-header)
+			minmax(0, 1fr)
+			var(--grid-row-status);
+		grid-template-areas:
+			"header  header   header   header"
+			"rail    sidebar  main     panel"
+			"status  status   status   status";
+
+		min-height: 100vh;
+		min-height: 100dvh;
+		background: var(--layout-main-bg);
+		color: var(--layout-main-fg);
+	}
+
+	/* === Slots ================================================== */
+	.n-layout > .layout-header {
+		grid-area: header;
+		background: var(--layout-header-bg);
+		color: var(--layout-header-fg);
+		border-bottom: 1px solid var(--layout-divider);
+		min-width: 0;
+	}
+	.n-layout > .layout-rail {
+		grid-area: rail;
+		background: var(--layout-rail-bg);
+		color: var(--layout-rail-fg);
+		min-width: 0;
+		position: relative;
+	}
+	.n-layout > .layout-sidebar {
+		grid-area: sidebar;
+		background: var(--layout-sidebar-bg);
+		color: var(--layout-sidebar-fg);
+		border-right: 1px solid var(--layout-divider);
+		min-width: 0;
+		position: relative;
+	}
+	.n-layout > .layout-main {
+		grid-area: main;
+		background: var(--layout-main-bg);
+		color: var(--layout-main-fg);
+		min-width: 0;
+		min-height: 0;
+		overflow: auto;
+		position: relative;
+	}
+	.n-layout > .layout-panel {
+		grid-area: panel;
+		background: var(--layout-panel-bg);
+		color: var(--layout-panel-fg);
+		border-left: 1px solid var(--layout-divider);
+		min-width: 0;
+		position: relative;
+	}
+	.n-layout > .layout-status {
+		grid-area: status;
+		background: var(--layout-status-bg);
+		color: var(--layout-status-fg);
+		border-top: 1px solid var(--layout-divider);
+		min-width: 0;
+	}
+
+	/* === Options — 슬롯 숨김 (변수 0 으로 → 컬럼/로우 사라짐) ==== */
+	.n-layout.layout\:no-rail {
+		--grid-col-rail: 0;
+	}
+	.n-layout.layout\:no-rail > .layout-rail {
+		display: none;
+	}
+
+	.n-layout.layout\:no-sidebar {
+		--grid-col-sidebar: 0;
+	}
+	.n-layout.layout\:no-sidebar > .layout-sidebar {
+		display: none;
+	}
+
+	.n-layout.layout\:no-panel {
+		--grid-col-panel: 0;
+	}
+	.n-layout.layout\:no-panel > .layout-panel {
+		display: none;
+	}
+
+	.n-layout.layout\:no-header {
+		--grid-row-header: 0;
+	}
+	.n-layout.layout\:no-header > .layout-header {
+		display: none;
+	}
+
+	.n-layout.layout\:no-status {
+		--grid-row-status: 0;
+	}
+	.n-layout.layout\:no-status > .layout-status {
+		display: none;
+	}
+
+	/* === Options — sidebar 를 rail 폭으로 축소 (collapsed) ======= */
+	.n-layout.layout\:sidebar-collapsed {
+		--grid-col-sidebar: var(--layout-rail-width);
+	}
+
+	/* === Resize 중 — body cursor 고정 + 텍스트 선택 방지 ========= */
+	.n-layout[data-resizing] {
+		cursor: col-resize;
+		user-select: none;
+	}
+	.n-layout[data-resizing] * {
+		cursor: col-resize !important;
+		user-select: none !important;
+	}
+
+	/* === 다크 모드 — mix 비율 분기 ============================== */
+	[data-theme="dark"] .n-layout {
+		--layout-rail-bg: color-mix(in oklch, var(--layout-tint) 100%, black 50%);
+		--layout-sidebar-bg: color-mix(in oklch, var(--layout-tint) 100%, black 35%);
+		--layout-main-bg: color-mix(in oklch, var(--layout-tint) 3%, var(--color-surface, #1e293b));
+		--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 5%, var(--color-surface, #1e293b));
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme="light"]) .n-layout {
+			--layout-rail-bg: color-mix(in oklch, var(--layout-tint) 100%, black 50%);
+			--layout-sidebar-bg: color-mix(in oklch, var(--layout-tint) 100%, black 35%);
+			--layout-main-bg: color-mix(in oklch, var(--layout-tint) 3%, var(--color-surface, #1e293b));
+			--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 5%, var(--color-surface, #1e293b));
+		}
+	}
+
+	/* === 반응형 — 모바일 (< 768px): 좌우 슬롯 숨김, main 풀폭 === */
+	@media (max-width: 767px) {
+		.n-layout {
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-areas:
+				"header"
+				"main"
+				"status";
+		}
+		.n-layout > .layout-rail,
+		.n-layout > .layout-sidebar,
+		.n-layout > .layout-panel {
+			display: none;
+		}
+	}
+}
+
+/* === Design tokens override (per-slot) ===============================
+ * @newtil/materials 의 m3-* 컴포넌트는 layer 밖(unlayered) 에 정의되어
+ * cascade 우선순위가 layered 보다 높음. 따라서 layout 톤을 자식에 적용
+ * 하려면 같은 unlayered 영역에서 newtil design tokens (--color-surface,
+ * --color-on-surface) 를 slot 단위로 override 한다.
+ *
+ * 모든 newtil 컴포넌트가 design tokens 에 의존하므로 — m3-top-app-bar,
+ * m3-nav-rail, m3-nav-drawer, m3-card, m3-btn 등 어떤 자식이 들어와도
+ * slot 의 layout 톤을 자동으로 따라감 (개별 매핑 불필요).
+ * =================================================================== */
+
+.n-layout > .layout-header {
+	--color-surface: var(--layout-header-bg);
+	--color-on-surface: var(--layout-header-fg);
+}
+.n-layout > .layout-rail {
+	--color-surface: var(--layout-rail-bg);
+	--color-on-surface: var(--layout-rail-fg);
+}
+.n-layout > .layout-sidebar {
+	--color-surface: var(--layout-sidebar-bg);
+	--color-on-surface: var(--layout-sidebar-fg);
+}
+.n-layout > .layout-main {
+	--color-surface: var(--layout-main-bg);
+	--color-on-surface: var(--layout-main-fg);
+}
+.n-layout > .layout-panel {
+	--color-surface: var(--layout-panel-bg);
+	--color-on-surface: var(--layout-panel-fg);
+}
+.n-layout > .layout-status {
+	--color-surface: var(--layout-status-bg);
+	--color-on-surface: var(--layout-status-fg);
+}

@@ -58,10 +58,10 @@
 }
 
 /* ===== 테두리 없애기 ===== */
-:where([class*=" n-"], [class^="n-"] fieldset),
-:where([class*=" n-"], [class^="n-"] img),
-:where([class*=" n-"], [class^="n-"] abbr),
-:where([class*=" n-"], [class^="n-"] acronym),
+:where([class*=" n-"] fieldset, [class^="n-"] fieldset),
+:where([class*=" n-"] img, [class^="n-"] img),
+:where([class*=" n-"] abbr, [class^="n-"] abbr),
+:where([class*=" n-"] acronym, [class^="n-"] acronym),
 :where(body.reset fieldset),
 :where(body.reset img),
 :where(body.reset abbr),
@@ -70,8 +70,8 @@
 }
 
 /* ===== 목록 ===== */
-:where([class*=" n-"], [class^="n-"] ol),
-:where([class*=" n-"], [class^="n-"] ul),
+:where([class*=" n-"] ol, [class^="n-"] ol),
+:where([class*=" n-"] ul, [class^="n-"] ul),
 :where(body.reset ul),
 :where(body.reset ol) {
 	list-style: none;
@@ -80,16 +80,16 @@
 }
 
 /* ===== 테이블 ===== */
-:where([class*=" n-"], [class^="n-"] table),
+:where([class*=" n-"] table, [class^="n-"] table),
 :where(body.reset table) {
 	border-collapse: separate;
 	border-spacing: 0;
 	border: 0 none;
 }
 
-:where([class*=" n-"], [class^="n-"] caption),
-:where([class*=" n-"], [class^="n-"] th),
-:where([class*=" n-"], [class^="n-"] td),
+:where([class*=" n-"] caption, [class^="n-"] caption),
+:where([class*=" n-"] th, [class^="n-"] th),
+:where([class*=" n-"] td, [class^="n-"] td),
 :where(body.reset caption),
 :where(body.reset th),
 :where(body.reset td) {
@@ -100,11 +100,11 @@
 }
 
 /* ===== 텍스트 관련 요소 ===== */
-:where([class*=" n-"], [class^="n-"] address),
-:where([class*=" n-"], [class^="n-"] caption),
-:where([class*=" n-"], [class^="n-"] strong),
-:where([class*=" n-"], [class^="n-"] em),
-:where([class*=" n-"], [class^="n-"] cite),
+:where([class*=" n-"] address, [class^="n-"] address),
+:where([class*=" n-"] caption, [class^="n-"] caption),
+:where([class*=" n-"] strong, [class^="n-"] strong),
+:where([class*=" n-"] em, [class^="n-"] em),
+:where([class*=" n-"] cite, [class^="n-"] cite),
 :where(body.reset address),
 :where(body.reset caption),
 :where(body.reset strong),
@@ -114,19 +114,19 @@
 	font-style: normal;
 }
 
-:where([class*=" n-"], [class^="n-"] ins),
+:where([class*=" n-"] ins, [class^="n-"] ins),
 :where(body.reset ins) {
 	text-decoration: none;
 }
 
-:where([class*=" n-"], [class^="n-"] del),
+:where([class*=" n-"] del, [class^="n-"] del),
 :where(body.reset del) {
 	text-decoration: line-through;
 }
 
 /* ===== 인용문 ===== */
-:where([class*=" n-"], [class^="n-"] blockquote),
-:where([class*=" n-"], [class^="n-"] q),
+:where([class*=" n-"] blockquote, [class^="n-"] blockquote),
+:where([class*=" n-"] q, [class^="n-"] q),
 :where(body.reset blockquote),
 :where(body.reset q) {
 	quotes: "" "";
@@ -134,10 +134,10 @@
 	padding: 0;
 }
 
-:where([class*=" n-"], [class^="n-"] blockquote:before),
-:where([class*=" n-"], [class^="n-"] blockquote:after),
-:where([class*=" n-"], [class^="n-"] q:before),
-:where([class*=" n-"], [class^="n-"] q:after),
+:where([class*=" n-"] blockquote:before, [class^="n-"] blockquote:before),
+:where([class*=" n-"] blockquote:after, [class^="n-"] blockquote:after),
+:where([class*=" n-"] q:before, [class^="n-"] q:before),
+:where([class*=" n-"] q:after, [class^="n-"] q:after),
 :where(body.reset blockquote::before),
 :where(body.reset blockquote::after),
 :where(body.reset q::before),
@@ -146,20 +146,20 @@
 }
 
 /* ===== 수평선 ===== */
-:where([class*=" n-"], [class^="n-"] hr),
+:where([class*=" n-"] hr, [class^="n-"] hr),
 :where(body.reset hr) {
 	display: none;
 }
 
 /* ===== 하이퍼링크 ===== */
-:where([class*=" n-"], [class^="n-"] a),
+:where([class*=" n-"] a, [class^="n-"] a),
 :where(body.reset a) {
 	text-decoration: none;
 	color: inherit;
 }
 
 /* ===== 폼 요소 ===== */
-:where([class*=" n-"], [class^="n-"] input),
+:where([class*=" n-"] input, [class^="n-"] input),
 :where(body.reset input),
 :where(body.reset textarea),
 :where(body.reset select) {
@@ -170,11 +170,11 @@
 	box-sizing: border-box;
 }
 
-:where([class*=" n-"], [class^="n-"] input:focus),
-:where([class*=" n-"], [class^="n-"] select:focus),
-:where([class*=" n-"], [class^="n-"] option:focus),
-:where([class*=" n-"], [class^="n-"] textarea:focus),
-:where([class*=" n-"], [class^="n-"] button:focus),
+:where([class*=" n-"] input:focus, [class^="n-"] input:focus),
+:where([class*=" n-"] select:focus, [class^="n-"] select:focus),
+:where([class*=" n-"] option:focus, [class^="n-"] option:focus),
+:where([class*=" n-"] textarea:focus, [class^="n-"] textarea:focus),
+:where([class*=" n-"] button:focus, [class^="n-"] button:focus),
 :where(body.reset input:focus),
 :where(body.reset select:focus),
 :where(body.reset option:focus),
@@ -183,9 +183,9 @@
 	outline: none;
 }
 
-:where([class*=" n-"], [class^="n-"] label),
-:where([class*=" n-"], [class^="n-"] legend),
-:where([class*=" n-"], [class^="n-"] fieldset),
+:where([class*=" n-"] label, [class^="n-"] label),
+:where([class*=" n-"] legend, [class^="n-"] legend),
+:where([class*=" n-"] fieldset, [class^="n-"] fieldset),
 :where(body.reset label),
 :where(body.reset legend),
 :where(body.reset fieldset) {
@@ -194,13 +194,13 @@
 	margin: 0;
 }
 
-:where([class*=" n-"], [class^="n-"] input[type="checkbox"]),
+:where([class*=" n-"] input[type="checkbox"], [class^="n-"] input[type="checkbox"]),
 :where(body.reset input[type="checkbox"]) {
 	margin: 0;
 }
 
 /* ===== 버튼 ===== */
-:where([class*=" n-"], [class^="n-"] button),
+:where([class*=" n-"] button, [class^="n-"] button),
 :where(body.reset button) {
 	background-color: transparent;
 	border: 0;
