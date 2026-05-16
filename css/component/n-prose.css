@@ -13,17 +13,20 @@
  *   prose:sm    작은 본문 (설명, 캡션성)
  *   prose:lg    큰 본문 (블로그, 레터)
  *
- * 설계:
- *   - 여백 규칙: 제목은 위·아래, 문장은 아래만, 첫/마지막 요소는 margin 제거
- *   - 모든 값은 @newtil/design-tokens 참조 (다크모드 자동 대응)
- *   - @newtil/components/reset.css 가 n-* prefix를 리셋하므로 명시 스타일 필요
+ * 설계 (GitHub markdown-body 패턴):
+ *   - 본문 line-height 1.5, font-size 16px
+ *   - 모든 블록 (p/ul/ol/blockquote/pre/table) 하단 마진 16px 통일
+ *   - heading 통합 마진 24/16, font-weight semibold(600), line-height 1.25
+ *   - h1/h2 padding-bottom + border-bottom 으로 시각적 anchor
+ *   - 첫/마지막 자식은 외부 여백 제거 (컨테이너 여백과 이중 방지)
+ *   - 색상/배경/장식 (blockquote primary border, pre dark theme, mark warning) 은 newtil 디자인 톤 유지
  */
 
 @layer components {
 	.n-prose {
 		color: var(--color-text);
 		font-size: var(--font-size-body);
-		line-height: var(--line-height-loose);
+		line-height: var(--line-height-normal);
 		word-break: break-word;
 	}
 
@@ -34,9 +37,17 @@
 	.n-prose > *:first-child { margin-top: 0; }
 	.n-prose > *:last-child  { margin-bottom: 0; }
 
-	/* ─── 문장 ─── */
-	.n-prose p {
-		margin: 0 0 var(--space-7) 0;
+	/* ─── 블록 통합 마진 (GitHub markdown-body 패턴) ─── *
+	 * 모든 블록 하단 마진을 16px 로 통일. line-height 1.5 와 조합되어
+	 * 짧은 글에서도 빈 줄 없이 자연스러운 간격을 만든다. */
+	.n-prose p,
+	.n-prose blockquote,
+	.n-prose ul,
+	.n-prose ol,
+	.n-prose dl,
+	.n-prose table,
+	.n-prose pre {
+		margin: 0 0 var(--space-5);
 	}
 
 	/* ─── 제목 ─── */
@@ -47,16 +58,25 @@
 	.n-prose h5,
 	.n-prose h6 {
 		color: var(--color-text);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
+		margin: var(--space-7) 0 var(--space-5);
+		font-weight: var(--font-weight-semibold);
+		line-height: 1.25;
 		letter-spacing: var(--letter-spacing-tight);
 	}
-	.n-prose h1 { font-size: var(--font-size-heading-lg); margin: var(--space-10) 0 var(--space-6); }
-	.n-prose h2 { font-size: var(--font-size-heading-md); margin: var(--space-9) 0 var(--space-5); }
-	.n-prose h3 { font-size: var(--font-size-heading-sm); margin: var(--space-8) 0 var(--space-5); font-weight: var(--font-weight-semibold); }
-	.n-prose h4 { font-size: var(--font-size-body-lg);    margin: var(--space-7) 0 var(--space-5); font-weight: var(--font-weight-semibold); }
-	.n-prose h5 { font-size: var(--font-size-body);       margin: var(--space-7) 0 var(--space-4); font-weight: var(--font-weight-semibold); }
-	.n-prose h6 { font-size: var(--font-size-body-sm);    margin: var(--space-7) 0 var(--space-4); font-weight: var(--font-weight-semibold); color: var(--color-text-muted); }
+	.n-prose h1 {
+		font-size: var(--font-size-heading-lg);
+		padding-bottom: 0.3em;
+		border-bottom: 1px solid var(--color-border);
+	}
+	.n-prose h2 {
+		font-size: var(--font-size-heading-md);
+		padding-bottom: 0.3em;
+		border-bottom: 1px solid var(--color-border);
+	}
+	.n-prose h3 { font-size: var(--font-size-heading-sm); }
+	.n-prose h4 { font-size: var(--font-size-body-lg); }
+	.n-prose h5 { font-size: var(--font-size-body); }
+	.n-prose h6 { font-size: var(--font-size-body-sm); color: var(--color-text-muted); }
 
 	/* ─── 텍스트 강조 ─── */
 	.n-prose strong,
@@ -87,12 +107,11 @@
 	/* ─── 리스트 ─── */
 	.n-prose ul,
 	.n-prose ol {
-		margin: 0 0 var(--space-7) 0;
 		padding-left: var(--space-6);
 	}
 	.n-prose ul { list-style: disc; }
 	.n-prose ol { list-style: decimal; }
-	.n-prose li { margin: var(--space-4) 0; }
+	.n-prose li { margin-top: 0.25em; }
 	.n-prose li::marker { color: var(--color-text-muted); }
 
 	/* 중첩 리스트 */
@@ -109,10 +128,9 @@
 	.n-prose li > p { margin: 0; }
 	.n-prose li > p + p { margin-top: var(--space-3); }
 
-	/* ─── 인용 ─── */
+	/* ─── 인용 (디자인 톤 newtil 유지, padding 만 GitHub 식 0 1em) ─── */
 	.n-prose blockquote {
-		margin: 0 0 var(--space-7) 0;
-		padding: var(--space-2) var(--space-4);
+		padding: 0 1em;
 		border-left: 3px solid var(--color-primary);
 		color: var(--color-text-muted);
 		background: var(--color-surface-1);
@@ -130,8 +148,7 @@
 		border-radius: var(--radius-1);
 	}
 	.n-prose pre {
-		margin: 0 0 var(--space-7) 0;
-		padding: var(--space-4);
+		padding: var(--space-5);
 		background: var(--color-surface-inverse);
 		color: var(--color-on-surface-inverse);
 		border-radius: var(--radius-3);
@@ -174,7 +191,6 @@
 
 	/* ─── 표 (간이) — 본격적인 표는 n-table 사용 권장 ─── */
 	.n-prose table {
-		margin: 0 0 var(--space-7) 0;
 		border-collapse: collapse;
 		width: 100%;
 		font-size: var(--font-size-body-sm);

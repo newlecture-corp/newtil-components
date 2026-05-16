@@ -1,6 +1,6 @@
 {
 	"name": "@newtil/components",
-	"version": "0.4.4",
+	"version": "0.4.6",
 	"description": "newtil 기본 컴포넌트 라이브러리 — n- prefix (prose, table, layout 등). @newtil/design-tokens 위에 동작. v0.4 부터 web component 도 포함 (n-resize-handle).",
 	"publishConfig": {
 		"access": "public"
