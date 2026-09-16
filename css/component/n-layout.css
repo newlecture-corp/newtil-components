@@ -46,26 +46,26 @@
 		--layout-status-height: 1.75rem;
 
 		/* 사용자 tint — 미지정 시 surface (중성). 호출자가 style="--layout-tint: #..." 로 override */
-		--layout-tint: var(--color-surface, #ffffff);
+		--layout-tint: var(--color-surface);
 
 		/* 자동 파생 — color-mix oklch 기반 단계적 음영 */
 		--layout-rail-bg: color-mix(in oklch, var(--layout-tint) 100%, black 20%);
 		--layout-sidebar-bg: color-mix(in oklch, var(--layout-tint) 100%, black 10%);
-		--layout-main-bg: color-mix(in oklch, var(--layout-tint) 4%, var(--color-surface, #ffffff));
-		--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 6%, var(--color-surface, #ffffff));
+		--layout-main-bg: color-mix(in oklch, var(--layout-tint) 4%, var(--color-surface));
+		--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 6%, var(--color-surface));
 		--layout-header-bg: var(--layout-rail-bg);
 		--layout-status-bg: var(--layout-rail-bg);
 
 		/* 텍스트 색 — design-tokens 의 text 따라감 */
-		--layout-rail-fg: var(--color-on-surface, #0f172a);
-		--layout-sidebar-fg: var(--color-on-surface, #0f172a);
-		--layout-main-fg: var(--color-text, #0f172a);
-		--layout-panel-fg: var(--color-text, #0f172a);
+		--layout-rail-fg: var(--color-text);
+		--layout-sidebar-fg: var(--color-text);
+		--layout-main-fg: var(--color-text);
+		--layout-panel-fg: var(--color-text);
 		--layout-header-fg: var(--layout-rail-fg);
 		--layout-status-fg: var(--layout-rail-fg);
 
 		/* 구분선 */
-		--layout-divider: var(--color-outline, rgba(0, 0, 0, 0.1));
+		--layout-divider: var(--color-border);
 
 		/* 그리드 컬럼/로우 변수 — 옵션 시 0 으로 줄여 슬롯 숨김 */
 		--grid-col-rail: var(--layout-rail-width);
@@ -199,16 +199,16 @@
 	[data-theme="dark"] .n-layout {
 		--layout-rail-bg: color-mix(in oklch, var(--layout-tint) 100%, black 50%);
 		--layout-sidebar-bg: color-mix(in oklch, var(--layout-tint) 100%, black 35%);
-		--layout-main-bg: color-mix(in oklch, var(--layout-tint) 3%, var(--color-surface, #1e293b));
-		--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 5%, var(--color-surface, #1e293b));
+		--layout-main-bg: color-mix(in oklch, var(--layout-tint) 3%, var(--color-surface));
+		--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 5%, var(--color-surface));
 	}
 
 	@media (prefers-color-scheme: dark) {
 		:root:not([data-theme="light"]) .n-layout {
 			--layout-rail-bg: color-mix(in oklch, var(--layout-tint) 100%, black 50%);
 			--layout-sidebar-bg: color-mix(in oklch, var(--layout-tint) 100%, black 35%);
-			--layout-main-bg: color-mix(in oklch, var(--layout-tint) 3%, var(--color-surface, #1e293b));
-			--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 5%, var(--color-surface, #1e293b));
+			--layout-main-bg: color-mix(in oklch, var(--layout-tint) 3%, var(--color-surface));
+			--layout-panel-bg: color-mix(in oklch, var(--layout-tint) 5%, var(--color-surface));
 		}
 	}
 
@@ -233,7 +233,9 @@
  * @newtil/materials 의 m3-* 컴포넌트는 layer 밖(unlayered) 에 정의되어
  * cascade 우선순위가 layered 보다 높음. 따라서 layout 톤을 자식에 적용
  * 하려면 같은 unlayered 영역에서 newtil design tokens (--color-surface,
- * --color-on-surface) 를 slot 단위로 override 한다.
+ * --color-text) 를 slot 단위로 override 한다.
+ * --color-on-surface 는 design-tokens 0.2.1 에서 --color-text 의 별칭(:root 에서 계산·상속)이라
+ * 슬롯의 --color-text 를 따라오지 못한다. 별칭이 남아 있는 동안은 둘 다 세팅한다.
  *
  * 모든 newtil 컴포넌트가 design tokens 에 의존하므로 — m3-top-app-bar,
  * m3-nav-rail, m3-nav-drawer, m3-card, m3-btn 등 어떤 자식이 들어와도
@@ -242,25 +244,31 @@
 
 .n-layout > .layout-header {
 	--color-surface: var(--layout-header-bg);
-	--color-on-surface: var(--layout-header-fg);
+	--color-text: var(--layout-header-fg);
+	--color-on-surface: var(--layout-header-fg);   /* 별칭 기간 */
 }
 .n-layout > .layout-rail {
 	--color-surface: var(--layout-rail-bg);
-	--color-on-surface: var(--layout-rail-fg);
+	--color-text: var(--layout-rail-fg);
+	--color-on-surface: var(--layout-rail-fg);   /* 별칭 기간 */
 }
 .n-layout > .layout-sidebar {
 	--color-surface: var(--layout-sidebar-bg);
-	--color-on-surface: var(--layout-sidebar-fg);
+	--color-text: var(--layout-sidebar-fg);
+	--color-on-surface: var(--layout-sidebar-fg);   /* 별칭 기간 */
 }
 .n-layout > .layout-main {
 	--color-surface: var(--layout-main-bg);
-	--color-on-surface: var(--layout-main-fg);
+	--color-text: var(--layout-main-fg);
+	--color-on-surface: var(--layout-main-fg);   /* 별칭 기간 */
 }
 .n-layout > .layout-panel {
 	--color-surface: var(--layout-panel-bg);
-	--color-on-surface: var(--layout-panel-fg);
+	--color-text: var(--layout-panel-fg);
+	--color-on-surface: var(--layout-panel-fg);   /* 별칭 기간 */
 }
 .n-layout > .layout-status {
 	--color-surface: var(--layout-status-bg);
-	--color-on-surface: var(--layout-status-fg);
+	--color-text: var(--layout-status-fg);
+	--color-on-surface: var(--layout-status-fg);   /* 별칭 기간 */
 }

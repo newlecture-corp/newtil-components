@@ -139,7 +139,7 @@ primary 색 왼쪽 보더 + subtle 배경. 내부 p 여러 개 지원.
 
 ### 코드
 
-인라인은 `--color-surface-muted` 배경 + `--color-danger` 텍스트. pre는 `--color-surface-inverse` 배경.
+인라인은 `--color-surface-2` 배경 + `--color-danger` 텍스트. pre는 `--color-surface-inverse` 배경.
 
 <Demo>
 <article class="n-prose">

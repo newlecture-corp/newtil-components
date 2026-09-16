@@ -81,12 +81,12 @@
 
 ```css
 .my-override {
-  --color-surface-muted: #f5f5f5;
+  --color-surface-2: #f5f5f5;
 }
 
 @media (prefers-color-scheme: dark) {
   .my-override {
-    --color-surface-muted: #2a2a2a;
+    --color-surface-2: #2a2a2a;
   }
 }
 ```

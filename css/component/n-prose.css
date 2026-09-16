@@ -150,7 +150,7 @@
 	.n-prose pre {
 		padding: var(--space-5);
 		background: var(--color-surface-inverse);
-		color: var(--color-on-surface-inverse);
+		color: var(--color-text-inverse);
 		border-radius: var(--radius-3);
 		overflow-x: auto;
 		line-height: var(--line-height-normal);
@@ -185,6 +185,7 @@
 	/* ─── 가로줄 ─── */
 	.n-prose hr {
 		margin: var(--space-8) 0;
+		display: block;   /* reset 이 n-* 안의 hr 를 display:none 으로 숨긴다 — 여기서 되살린다 */
 		border: 0;
 		border-top: 1px solid var(--color-border);
 	}
