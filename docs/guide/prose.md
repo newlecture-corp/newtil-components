@@ -126,7 +126,7 @@ ul (disc), ol (decimal), 중첩 시 circle → square. `li::marker` 색도 토�
 
 ### 인용 (blockquote)
 
-primary 색 왼쪽 보더 + subtle 배경. 내부 p 여러 개 지원.
+primary 색 왼쪽 보더 + `--color-surface-1` 배경. 내부 p 여러 개 지원.
 
 <Demo>
 <article class="n-prose">

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.8 (2026-09-16) — 문서
+
+- README·LICENSE 신설(게시본에 빠져 있었다). 문서: n-resize-handle 페이지 추가, 옛 이름·잘못된 안내 정정. Pages 워크플로가 dist 를 빌드하지 않아 404 이던 문제 수정.
+
 ## 0.4.7 (2026-09-16) — design-tokens 0.2.1 반영
 
 - 의존: `@newtil/design-tokens ^0.2.1`.

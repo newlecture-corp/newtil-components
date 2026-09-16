@@ -1,6 +1,6 @@
 # 시작하기
 
-`@newtil/components`는 newtil 패밀리의 기본 컴포넌트 라이브러리입니다. `n-` prefix 클래스로 prose(본문), table, pagination 등을 제공합니다. Material Design 3 구현체가 필요하면 [`@newtil/materials`](https://github.com/newlecture-corp/newtil-materials)를 사용하세요.
+`@newtil/components`는 newtil 패밀리의 기본 컴포넌트 라이브러리입니다. `n-` prefix 클래스로 prose(본문), table, layout 을, 그리고 웹 컴포넌트 `<n-resize-handle>` 을 제공합니다. Material Design 3 구현체가 필요하면 [`@newtil/materials`](https://github.com/newlecture-corp/newtil-materials)를 사용하세요.
 
 ## 설치
 
@@ -8,7 +8,7 @@
 npm install @newtil/components
 ```
 
-`@newtil/design-tokens`가 peer dependency로 함께 설치됩니다.
+`@newtil/design-tokens`는 일반 의존성(dependencies)이라 함께 설치됩니다. 따로 설치할 필요가 없습니다.
 
 ## 단독 사용
 
@@ -28,6 +28,17 @@ import "@newtil/components";
 /* 또는 CSS에서 */
 @import "@newtil/components";
 ```
+
+## 웹 컴포넌트 (n-resize-handle)
+
+CSS 컴포넌트는 import 한 줄로 끝나지만, `<n-resize-handle>` 은 JS 모듈을 브라우저에서 한 번 등록해야 합니다.
+
+```js
+import "@newtil/components/n-resize-handle";   // 개별
+import "@newtil/components/js";                // 이 패키지의 웹 컴포넌트 전부
+```
+
+자세한 내용은 [Resize handle](/guide/resize-handle) 을 참고하세요.
 
 ## @newtil/materials와 함께 사용
 
@@ -84,6 +95,8 @@ Next.js에서 `node_modules` CSS를 `app/layout.tsx` 또는 `app/globals.css`에
 import "@newtil/components";
 ```
 
+`<n-resize-handle>` 을 쓴다면 JS 등록은 `"use client"` 컴포넌트에서 import 합니다 ([SSR 안내](/guide/resize-handle#ssr-next-js)).
+
 Next.js가 `@import url()` 외부 URL 스타일을 번들링에서 누락시키는 경우가 있지만, `@newtil/components`는 외부 폰트 등 URL import를 사용하지 않으므로 이 문제가 없습니다.
 
 ## 다음 단계
@@ -91,3 +104,5 @@ Next.js가 `@import url()` 외부 URL 스타일을 번들링에서 누락시키�
 - [커스터마이징](/guide/customization) — 타입 → 옵션 → 변수 3단계 원칙
 - [Prose](/guide/prose) — 마크다운 본문 렌더링
 - [Table](/guide/table) — 데이터 표
+- [Layout](/guide/layout) — 도구 앱 레이아웃
+- [Resize handle](/guide/resize-handle) — 슬롯 폭 조절 웹 컴포넌트

@@ -6,7 +6,7 @@ export default defineConfig({
   ignoreDeadLinks: true,
   base: BASE_PATH,
   title: "@newtil/components",
-  description: "newtil 기본 컴포넌트 라이브러리 — n- prefix (prose, table, pagination…)",
+  description: "newtil 기본 컴포넌트 라이브러리 — n- prefix (prose, table, layout, resize-handle)",
   appearance: true,
   lang: "ko",
   head: [
@@ -47,6 +47,7 @@ export default defineConfig({
           { text: "Prose — 본문 렌더링", link: "/prose" },
           { text: "Table — 데이터 표", link: "/table" },
           { text: "Layout — 도구 앱 레이아웃", link: "/layout" },
+          { text: "Resize handle — 슬롯 폭 조절", link: "/resize-handle" },
         ],
       },
     ],

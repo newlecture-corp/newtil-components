@@ -1,4 +1,4 @@
-name: Deploy Docs
+name: Deploy VitePress docs
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   pages: write
   id-token: write
 
-# 동시 배포 방지 — 진행 중이면 새 push 도 취소 X 마지막까지 기다리고 다음 실행
+# 동시 배포 방지 — 진행 중이면 새 push 도 취소하지 않고 순서대로 실행
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -31,11 +31,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # docs/.vitepress/theme 가 ../../../dist/index.css 를 import 한다 — dist 를 먼저 만들어야 한다
+      - name: Build components (dist)
+        run: npm run build
+
       - name: Build VitePress
         run: npm run docs:build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

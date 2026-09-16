@@ -1,6 +1,6 @@
 # n-layout — Tool app layout
 
-Slack · Discord · VSCode · Linear 같은 도구 앱의 표준 layout 컴포넌트입니다. 6개 슬롯 (header / rail / sidebar / main / panel / status) 을 CSS Grid 로 배치하고, **`--layout-tint` 한 줄로 4개 슬롯 색상이 자동 음영** 처리됩니다. 라이트/다크 테마 자동 분기. M3 의 `m3-layout` 이 단일 navigation 어댑티브 layout 인 것과 다르게, 이 컴포넌트는 *영구적으로 표시되는 다영역 도구 앱* 을 다룹니다.
+Slack · Discord · VSCode · Linear 같은 도구 앱의 표준 layout 컴포넌트입니다. 6개 슬롯 (header / rail / sidebar / main / panel / status) 을 CSS Grid 로 배치하고, **`--layout-tint` 한 줄로 4개 슬롯 색상이 자동 음영** 처리됩니다. 라이트/다크 테마 자동 분기. `@newtil/materials` 의 `m3-layout` 이 단일 navigation 어댑티브 layout 인 것과 다르게, 이 컴포넌트는 *영구적으로 표시되는 다영역 도구 앱* 을 다룹니다.
 
 ## 슬롯 구조
 
@@ -108,13 +108,13 @@ Slack · Discord · VSCode · Linear 같은 도구 앱의 표준 layout 컴포�
 | `--layout-panel-bg` / `--layout-panel-fg` | tint 기반 자동 |
 | `--layout-header-bg` / `--layout-header-fg` | rail 과 동일 |
 | `--layout-status-bg` / `--layout-status-fg` | rail 과 동일 |
-| `--layout-divider` | `var(--color-outline)` |
+| `--layout-divider` | `var(--color-border)` |
 
 자동 파생을 무시하고 슬롯별 색을 직접 지정하고 싶으면 해당 `*-bg` / `*-fg` 변수를 override 하면 됩니다.
 
 ## Resize handle — `<n-resize-handle>`
 
-sidebar / panel 폭을 마우스 드래그로 조절하는 web component 입니다. 슬롯 안 자식으로 두면 자동 동작.
+sidebar / panel 폭을 마우스 드래그로 조절하는 web component 입니다. 슬롯 안 자식으로 두면 자동 동작. 속성·동작·SSR 안내는 [Resize handle](/guide/resize-handle) 페이지에 있습니다.
 
 ```html
 <div class="n-layout">
@@ -131,7 +131,7 @@ sidebar / panel 폭을 마우스 드래그로 조절하는 web component 입니�
 ```
 
 ```js
-// Web component 등록 (한 번만 어딘가에서)
+// Web component 등록 — 브라우저에서 한 번
 import '@newtil/components/n-resize-handle';
 ```
 
@@ -143,18 +143,18 @@ import '@newtil/components/n-resize-handle';
 | `max` | `800` | 최대 폭 (px) |
 
 ::: tip Next.js / SSR
-0.4.1 부터 `HTMLElement` 가드가 들어 있어 server prerender 시점에서도 import 안전합니다. 별도 dynamic import 불필요.
+모듈에 `HTMLElement` 가드가 있어 server prerender 시점에 import 되어도 오류는 없습니다. 등록은 브라우저에서만 일어나므로 `"use client"` 컴포넌트에서 import 하세요.
 :::
 
 ## 다른 newtil 컴포넌트와의 결합
 
-`n-layout` 의 슬롯 안에 `@newtil/materials` 의 m3-* 컴포넌트를 그대로 넣으면 — **layout 의 톤을 자동으로 따라갑니다**. n-layout 이 슬롯별로 newtil design tokens (`--color-surface`, `--color-on-surface`) 를 layout 톤으로 override 하기 때문입니다.
+`n-layout` 의 슬롯 안에 `@newtil/materials` 의 m3-* 컴포넌트를 그대로 넣으면 — **layout 의 톤을 자동으로 따라갑니다**. n-layout 이 슬롯별로 newtil design tokens (`--color-surface`, `--color-text`) 를 layout 톤으로 override 하기 때문입니다.
 
 ```html
 <div class="n-layout" style="--layout-tint: #4f46e5">
   <!-- m3-top-app-bar 가 자동으로 indigo 진한 톤 -->
   <header class="m3-top-app-bar layout-header">
-    <h1 class="bar-title">관리자</h1>
+    <h1 class="bar-title">워크스페이스</h1>
   </header>
 
   <!-- m3-nav-rail 도 자동으로 같은 톤, m3-deco active indicator 도 자동 -->
@@ -173,16 +173,16 @@ import '@newtil/components/n-resize-handle';
 
 ### 1. 영역 정체성 — `--layout-tint`
 
-각 영역 (admin · my · instructor · workspace) 별로 다른 tint 만 지정하면 일관된 음영 시스템이 자동 적용됩니다.
+앱의 영역(예: 워크스페이스 · 설정 · 대시보드)마다 다른 tint 만 지정하면 일관된 음영 시스템이 자동 적용됩니다.
 
 ```css
-/* admin 영역 */
-.admin-layout {
+/* 워크스페이스 영역 */
+.workspace-layout {
   --layout-tint: #4f46e5;     /* indigo */
 }
 
-/* instructor 영역 */
-.instructor-layout {
+/* 대시보드 영역 */
+.dashboard-layout {
   --layout-tint: #16a34a;     /* green */
 }
 ```
@@ -191,7 +191,7 @@ import '@newtil/components/n-resize-handle';
 
 ```css
 .compact-layout {
-  --layout-rail-width: 4rem;       /* M3 default 5rem 보다 컴팩트 */
+  --layout-rail-width: 4rem;       /* m3-nav-rail 기본 --rail-width 5rem 보다 컴팩트 */
   --layout-sidebar-width: 14rem;
   --layout-header-height: 3.25rem;
 }
@@ -216,8 +216,8 @@ m3-* 의 자체 변수 (`--bar-height`, `--rail-width` 등) 는 layout 의 슬�
 
 `@newtil/materials` 의 m3-* 컴포넌트들은 **CSS layer 밖(unlayered)** 에서 정의되어 있어 — `@layer components` 안 styling 보다 cascade 우선순위가 높습니다. 따라서 layout 톤을 m3-* 자식에 적용하려면:
 
-- ✅ **불필요한 작업**: m3-* 의 `--bar-background` 같은 자체 변수를 일일이 매핑 (강한 결합)
-- ✅ **권장**: design tokens (`--color-surface`, `--color-on-surface`) 만 슬롯 단위로 override → 모든 m3-* 자식이 자동으로 따라감
+- ❌ **불필요한 작업**: m3-* 의 `--bar-background` 같은 자체 변수를 일일이 매핑 (강한 결합)
+- ✅ **권장**: design tokens (`--color-surface`, `--color-text`) 만 슬롯 단위로 override → 모든 m3-* 자식이 자동으로 따라감
 
 n-layout 이 이 패턴을 이미 내부에서 처리합니다 — 호출자가 추가 작업할 필요 없음.
 
@@ -242,10 +242,10 @@ n-layout 이 이 패턴을 이미 내부에서 처리합니다 — 호출자가 
 - panel 위치 옵션 (`:panel-bottom` / `:panel-left`)
 - collapse transition 애니메이션
 
-## 종합 예시 — Admin 영역
+## 종합 예시 — Next.js App Router
 
 ```css
-/* admin/layout.module.css */
+/* app/workspace/layout.module.css */
 .layout {
   --layout-tint: #4f46e5;
   --layout-header-height: 3.25rem;
@@ -270,11 +270,12 @@ n-layout 이 이 패턴을 이미 내부에서 처리합니다 — 호출자가 
 ```
 
 ```tsx
-// admin/layout.tsx
+// app/workspace/layout.tsx
+'use client';
 import '@newtil/components/n-resize-handle';
 import styles from './layout.module.css';
 
-export default function AdminLayout({ children, sidePanel }) {
+export default function WorkspaceLayout({ children, sidePanel }) {
   return (
     <div className={`n-layout layout:no-status layout:no-panel ${styles.layout}`}>
       <Header />        {/* className 에 layout-header */}

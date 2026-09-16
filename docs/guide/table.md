@@ -150,9 +150,9 @@
 <table class="n-table table:striped table-hover:row">
   <thead><tr><th>사용자</th><th>역할</th><th>최근 로그인</th></tr></thead>
   <tbody>
-    <tr><td>admin@newlecture.com</td><td>관리자</td><td>10분 전</td></tr>
-    <tr><td>lecture1@newlecture.com</td><td>강사</td><td>2시간 전</td></tr>
-    <tr><td>student1@newlecture.com</td><td>수강생</td><td>어제</td></tr>
+    <tr><td>admin@example.com</td><td>관리자</td><td>10분 전</td></tr>
+    <tr><td>editor@example.com</td><td>강사</td><td>2시간 전</td></tr>
+    <tr><td>member@example.com</td><td>수강생</td><td>어제</td></tr>
   </tbody>
 </table>
 </Demo>

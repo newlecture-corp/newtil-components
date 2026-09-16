@@ -4,7 +4,7 @@ import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import './style.css';
 
-// @newtil/web CSS (라이브 프리뷰용)
+// @newtil/components 빌드 산출물 (라이브 프리뷰용) — docs:build 전에 npm run build 필요
 import '../../../dist/index.css';
 
 // Demo 컴포넌트
