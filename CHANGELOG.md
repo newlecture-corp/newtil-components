@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.9 (2026-09-18) — 굵게+기울임 겹침
+
+- reset 이 `strong`·`em` 에 `font-weight`·`font-style` 을 둘 다 되돌려, `<em><strong>…</strong></em>` 처럼 겹치면 안쪽이 바깥 스타일을 지우던 버그. `strong`·`caption` 은 굵기만, `em`·`cite`·`address` 는 기울임만 되돌린다.
+
 ## 0.4.8 (2026-09-16) — 문서
 
 - README·LICENSE 신설(게시본에 빠져 있었다). 문서: n-resize-handle 페이지 추가, 옛 이름·잘못된 안내 정정. Pages 워크플로가 dist 를 빌드하지 않아 404 이던 문제 수정.

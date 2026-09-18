@@ -100,17 +100,21 @@
 }
 
 /* ===== 텍스트 관련 요소 ===== */
-:where([class*=" n-"] address, [class^="n-"] address),
-:where([class*=" n-"] caption, [class^="n-"] caption),
+/* 브라우저 기본값만 되돌린다 — strong 은 굵기, em·cite·address 는 기울임. 두 속성을 한꺼번에 걸면
+   <em><strong>…</strong></em> 처럼 겹칠 때 안쪽 요소가 바깥의 스타일을 지운다(0.4.9 에서 분리). */
 :where([class*=" n-"] strong, [class^="n-"] strong),
+:where([class*=" n-"] caption, [class^="n-"] caption),
+:where(body.reset strong),
+:where(body.reset caption) {
+	font-weight: normal;
+}
+
+:where([class*=" n-"] address, [class^="n-"] address),
 :where([class*=" n-"] em, [class^="n-"] em),
 :where([class*=" n-"] cite, [class^="n-"] cite),
 :where(body.reset address),
-:where(body.reset caption),
-:where(body.reset strong),
 :where(body.reset em),
 :where(body.reset cite) {
-	font-weight: normal;
 	font-style: normal;
 }
 
