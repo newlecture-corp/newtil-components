@@ -171,6 +171,18 @@
 		margin: var(--space-6) 0;
 		border-radius: var(--radius-2);
 	}
+	/* ─── 편집기가 준 정렬 (@newtil/editor 0.10.9) — 글은 `<div align>` 상자, 그림은 `<img align>` ─── */
+	.n-prose div[align="center"] { text-align: center; }
+	.n-prose div[align="right"] { text-align: right; }
+	.n-prose div[align="left"] { text-align: left; }
+	/* 그림은 block 이라 상자의 text-align 이 안 먹는다 — 가로 여백으로 상자가 시킨 자리에 (0.4.10) */
+	.n-prose div[align="center"] img,
+	.n-prose img[align="center"] { margin-inline: auto; }
+	.n-prose div[align="right"] img,
+	.n-prose img[align="right"] { margin-inline: auto 0; }
+	.n-prose div[align="left"] img,
+	.n-prose img[align="left"] { margin-inline: 0 auto; }
+
 	.n-prose figure {
 		margin: var(--space-6) 0;
 	}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.10 (2026-09-28) — 그림 가운데 정렬
+
+- `n-prose`: 편집기가 준 정렬(`<div align>` 문단 상자, `<img align>`)을 그림에도 적용한다. 그림은 `display: block` 이라 상자의 `text-align: center` 가 먹지 않아, 편집기에선 가운데였던 그림이 저장 후 읽기 화면에선 왼쪽에 붙어 있었다(정렬은 마크다운에 남아 있었고 화면만 풀렸다). `margin-inline: auto` 로 상자가 시킨 자리에 놓는다.
+
 ## 0.4.9 (2026-09-18) — 굵게+기울임 겹침
 
 - reset 이 `strong`·`em` 에 `font-weight`·`font-style` 을 둘 다 되돌려, `<em><strong>…</strong></em>` 처럼 겹치면 안쪽이 바깥 스타일을 지우던 버그. `strong`·`caption` 은 굵기만, `em`·`cite`·`address` 는 기울임만 되돌린다.
