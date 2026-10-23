@@ -26,6 +26,8 @@
 	.n-prose {
 		color: var(--color-text);
 		font-size: var(--font-size-body);
+		/* 본문 굵기를 직접 정한다 — 물려받으면 굵은 라벨 안의 편집기처럼 본문이 굵어지고 strong 과 구분이 안 된다 */
+		font-weight: var(--font-weight-regular);
 		line-height: var(--line-height-normal);
 		word-break: break-word;
 	}
