@@ -14,7 +14,7 @@
  *   prose:lg    큰 본문 (블로그, 레터)
  *
  * 설계 (GitHub markdown-body 패턴):
- *   - 본문 line-height 1.75(--line-height-loose), font-size 16px — 한글은 글자가 네모 칸을 꽉 채워 1.5 에선 줄이 붙어 보인다(0.4.11)
+ *   - 본문 line-height 1.6, font-size 16px — 1.5 는 한글이 붙어 보이고(0.4.11 에서 1.75 로 올림) 1.75 는 블록·목록 간격과 겹쳐 헐렁했다(0.4.13)
  *   - 모든 블록 (p/ul/ol/blockquote/pre/table) 하단 마진 16px 통일
  *   - heading 통합 마진 24/16, font-weight semibold(600), line-height 1.25
  *   - h1/h2 padding-bottom + border-bottom 으로 시각적 anchor
@@ -28,7 +28,7 @@
 		font-size: var(--font-size-body);
 		/* 본문 굵기를 직접 정한다 — 물려받으면 굵은 라벨 안의 편집기처럼 본문이 굵어지고 strong 과 구분이 안 된다 */
 		font-weight: var(--font-weight-regular);
-		line-height: var(--line-height-loose);
+		line-height: 1.6;
 		word-break: break-word;
 	}
 
@@ -113,8 +113,8 @@
 	}
 	.n-prose ul { list-style: disc; }
 	.n-prose ol { list-style: decimal; }
-	/* 항목 사이 8px — 여러 줄로 넘어가는 항목끼리 줄 간격과 구분되게(0.4.11, 이전 0.25em) */
-	.n-prose li { margin-top: var(--space-3); }
+	/* 항목 사이 4px — 목록은 한 덩어리로 모여 보여야 한다(0.4.11 의 8px 는 헐렁해 0.4.13 에서 되돌림) */
+	.n-prose li { margin-top: var(--space-2); }
 	.n-prose li::marker { color: var(--color-text-muted); }
 
 	/* 체크 항목 (0.4.12) — GFM 작업 목록 `- [ ] 할 일`. 편집기(@newtil/editor 0.10.25)와 읽기 화면이 같은 모양을 쓴다:
