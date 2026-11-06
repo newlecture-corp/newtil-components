@@ -117,6 +117,23 @@
 	.n-prose li { margin-top: var(--space-3); }
 	.n-prose li::marker { color: var(--color-text-muted); }
 
+	/* 체크 항목 (0.4.12) — GFM 작업 목록 `- [ ] 할 일`. 편집기(@newtil/editor 0.10.25)와 읽기 화면이 같은 모양을 쓴다:
+	 * 둘 다 `<li data-checked="true|false">` 맨 앞에 `<input type="checkbox">` 를 둔다. 체크 상자가 글머리 기호 자리에 선다.
+	 * 항목 사이에 빈 줄이 있는 목록(loose)은 렌더러가 상자를 첫 문단 안에 넣는다 — 그 자리도 같이 받는다 */
+	.n-prose li[data-checked] { list-style: none; position: relative; }
+	.n-prose li[data-checked] > input[type="checkbox"],
+	.n-prose li[data-checked] > p:first-child > input[type="checkbox"]:first-child {
+		position: absolute;
+		left: calc(-1 * var(--space-6));
+		top: calc((1lh - 1em) / 2);
+		width: 1em;
+		height: 1em;
+		margin: 0;
+		accent-color: var(--color-primary);
+		cursor: pointer;
+	}
+	.n-prose li[data-checked] input[type="checkbox"]:disabled { cursor: default; }
+
 	/* 중첩 리스트 */
 	.n-prose ul ul,
 	.n-prose ul ol,
